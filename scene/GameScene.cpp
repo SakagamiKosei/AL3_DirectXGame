@@ -30,6 +30,20 @@ void GameScene::Initialize() {
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 	// 3Dモデルの生成
 	model_ = Model::Create();
+	//// X,Y,Z 方向のスケーリングを設定
+	//worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
+	//// X,Y,Z 軸周りの回転角を設定
+	//worldTransform_.rotation_ = {0.0f,XM_PI/4.0f,0.0f};
+	// X,Y,Z 軸回りの回転角を設定
+	worldTransform_.rotation_ = {0.0f, XMConvertToRadians(45.0f),0.0f};
+	//// X,Y,Z 軸回りの平行移動を設定
+	//worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
+	// X,Y,Z 方向のスケーリングを設定
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+	// X,Y,Z　軸回りの回転角を設定
+	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
+	// X,Y,Z 軸回りの平行移動を設定
+	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
@@ -57,7 +71,7 @@ void GameScene::Update() {
 	// 変数の値をインクリメント
 	value_++;
 	// 値を含んだ文字列
-	std::string strDebug = std::string("Value:") + std::to_string(value_);
+	std::string strDebug = std::string("Translation:") + std::to_string(worldTransform_.translation_.x);
 	// デバックテキストの表示
 	debugText_->Print(strDebug, 50, 50, 1.0f);
 }
@@ -87,7 +101,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+	/*sprite_->Draw();*/
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
