@@ -71,9 +71,37 @@ void GameScene::Update() {
 	// 変数の値をインクリメント
 	value_++;
 	// 値を含んだ文字列
-	std::string strDebug = std::string("Translation:") + std::to_string(worldTransform_.translation_.x);
+	std::string translationDebug =
+	  std::string("translation:(") +
+	  std::to_string(worldTransform_.translation_.x) +
+	  std::string(",") +
+	     std::to_string(worldTransform_.translation_.y) +
+		std::string(",") +
+		 std::to_string(worldTransform_.translation_.z) + 
+		std::string(")");
+
+	std::string rotationDebug =
+	  std::string("rotation:(") + 
+		std::to_string(worldTransform_.rotation_.x) +
+	  std::string(",") + 
+		std::to_string(worldTransform_.rotation_.y) + 
+		std::string(",") +
+	  std::to_string(worldTransform_.rotation_.z) +
+		std::string(")");
+
+		std::string scaleDebug = 
+			std::string("scale:(") +
+	          std::to_string(worldTransform_.scale_.x) + 
+			std::string(",") +
+	        std::to_string(worldTransform_.scale_.y) + 
+			std::string(",") +
+	        std::to_string(worldTransform_.scale_.z) +
+			std::string(")");
+
 	// デバックテキストの表示
-	debugText_->Print(strDebug, 50, 50, 1.0f);
+	debugText_->Print(translationDebug, 50, 50, 1.0f);
+	debugText_->Print(rotationDebug, 50, 70, 1.0f);
+	debugText_->Print(scaleDebug, 50, 90, 1.0f);
 }
 
 void GameScene::Draw() {
