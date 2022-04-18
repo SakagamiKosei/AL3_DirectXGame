@@ -30,14 +30,8 @@ void GameScene::Initialize() {
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 	// 3Dモデルの生成
 	model_ = Model::Create();
-	//// X,Y,Z 方向のスケーリングを設定
-	//worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
-	//// X,Y,Z 軸周りの回転角を設定
-	//worldTransform_.rotation_ = {0.0f,XM_PI/4.0f,0.0f};
 	// X,Y,Z 軸回りの回転角を設定
 	worldTransform_.rotation_ = {0.0f, XMConvertToRadians(45.0f),0.0f};
-	//// X,Y,Z 軸回りの平行移動を設定
-	//worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
 	// X,Y,Z 方向のスケーリングを設定
 	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
 	// X,Y,Z　軸回りの回転角を設定
@@ -63,11 +57,7 @@ void GameScene::Update() {
 	    // 音声停止
 		audio_->StopWave(voiceHandle_);
 	}
-	//// デバックテキストの表示
-	//debugText_->Print("Kaizokuou ni oreha naru.", 50, 50, 1.0f);
-	// 書式指定付き表示
-	debugText_->SetPos(50, 70);
-	//debugText_->Printf("year:%d", 2001);
+	
 	// 変数の値をインクリメント
 	value_++;
 	// 値を含んだ文字列
