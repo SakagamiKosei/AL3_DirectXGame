@@ -53,8 +53,6 @@ void GameScene::Initialize() {
 		// ワールドトランスフォームの初期化
 		worldTransform_[i].Initialize();
 	}
-	
-
 
 	// サウンドデータの読み込み
 	soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
@@ -72,7 +70,7 @@ void GameScene::Initialize() {
 	viewProjection_.up = {cosf(XM_PI / 4.0f), 
 	 sinf(XM_PI / 4.0f), 0.0f};
 	// カメラ垂直方向視野角を設定
-	viewProjection_.fovAngleY = XMConvertToRadians(10.0f);
+	viewProjection_.fovAngleY = XMConvertToRadians(45.0f);
 
 	// アスペクト比を設定
 	viewProjection_.aspectRatio = 1.0f;
