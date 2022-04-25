@@ -57,11 +57,12 @@ void GameScene::Initialize() {
 	//worldTransform_[1].translation_ = {0,4.5f, 0};
 	//worldTransform_[1].parent_ = &worldTransform_[0];
 	//worldTransform_[1].Initialize();
-
+	worldTransform_[PartId::Root].scale_ = {0.6f, 1.0f, 1.0f};
 	// キャラクターの大元
 	worldTransform_[PartId::Root].Initialize();
+
 	// 脊椎
-	worldTransform_[PartId::Spine].translation_ = {0, 0.0f, 0};
+	worldTransform_[PartId::Spine].translation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_[PartId::Spine].parent_ = &worldTransform_[PartId::Root];
 	worldTransform_[PartId::Spine].Initialize();
 	// ---------------------------------------------------------------------
@@ -74,15 +75,15 @@ void GameScene::Initialize() {
 	// 頭
 	worldTransform_[PartId::Head].Initialize();
 	worldTransform_[PartId::Head].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::Head].translation_ = {0.0f, 6.0f, 0.0f};
+	worldTransform_[PartId::Head].translation_ = {0.0f, 3.0f, 0.0f};
 	// 左腕
 	worldTransform_[PartId::ArmL].Initialize();
 	worldTransform_[PartId::ArmL].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::ArmL].translation_ = {-4.0f,0.0f, 0.0f};
+	worldTransform_[PartId::ArmL].translation_ = {-3.0f,0.0f, 0.0f};
 	// 右腕
 	worldTransform_[PartId::ArmR].Initialize();
 	worldTransform_[PartId::ArmR].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::ArmR].translation_ = {4.0f, 0.0f, 0};
+	worldTransform_[PartId::ArmR].translation_ = {3.0f, 0.0f, 0};
 
 	// ----------------------------------------------------------------------
 	// 下半身
@@ -90,15 +91,15 @@ void GameScene::Initialize() {
 	// 尻
 	worldTransform_[PartId::Hip].Initialize();
 	worldTransform_[PartId::Hip].parent_ = &worldTransform_[PartId::Spine];
-	worldTransform_[PartId::Hip].translation_ = {0.0f, -1.0f, 0};
+	worldTransform_[PartId::Hip].translation_ = {0.0f, 2.0f, 0};
 	// 左足
 	worldTransform_[PartId::LegL].Initialize();
 	worldTransform_[PartId::LegL].parent_ = &worldTransform_[PartId::Hip];
-	worldTransform_[PartId::LegL].translation_ = {-4.0f, -4.0f, 0};
+	worldTransform_[PartId::LegL].translation_ = {-3.0f, -3.0f, 0};
 	// 右足
 	worldTransform_[PartId::LegR].Initialize();
 	worldTransform_[PartId::LegR].parent_ = &worldTransform_[PartId::Hip];
-	worldTransform_[PartId::LegR].translation_ = {4.0f, -4.0f, 0};
+	worldTransform_[PartId::LegR].translation_ = {3.0f, -3.0f, 0};
 
 	// カメラ視点座標を設定
 	viewProjection_.eye = {0, 0, -50};
