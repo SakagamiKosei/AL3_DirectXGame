@@ -147,7 +147,7 @@ void GameScene::Update() {
 		XMFLOAT3 move = {0, 0, 0};
 
 		// キャラクターの移動速さ
-		const float kCharacterSpeed = 0.2f;
+		const float kCharacterSpeed = 0.1f;
 
 		// 押した方向で移動ベクトルを変更
 		if (input_->PushKey(DIK_LEFT)) {
