@@ -70,19 +70,19 @@ void GameScene::Initialize() {
 	// 胸
 	worldTransform_[PartId::Chest].Initialize();
 	worldTransform_[PartId::Chest].parent_ = &worldTransform_[PartId::Spine];
-	worldTransform_[PartId::Chest].translation_ = {0, 10.0f, 0};
+	worldTransform_[PartId::Chest].translation_ = {0.0f, 5.0f, 0.0f};
 	// 頭
 	worldTransform_[PartId::Head].Initialize();
 	worldTransform_[PartId::Head].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::Head].translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[PartId::Head].translation_ = {0.0f, 6.0f, 0.0f};
 	// 左腕
 	worldTransform_[PartId::ArmL].Initialize();
 	worldTransform_[PartId::ArmL].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::ArmL].translation_ = {0,1.0f, 0};
+	worldTransform_[PartId::ArmL].translation_ = {-4.0f,0.0f, 0.0f};
 	// 右腕
 	worldTransform_[PartId::ArmR].Initialize();
 	worldTransform_[PartId::ArmR].parent_ = &worldTransform_[PartId::Chest];
-	worldTransform_[PartId::ArmR].translation_ = {30.0f, 3.0f, 0};
+	worldTransform_[PartId::ArmR].translation_ = {4.0f, 0.0f, 0};
 
 	// ----------------------------------------------------------------------
 	// 下半身
@@ -90,15 +90,15 @@ void GameScene::Initialize() {
 	// 尻
 	worldTransform_[PartId::Hip].Initialize();
 	worldTransform_[PartId::Hip].parent_ = &worldTransform_[PartId::Spine];
-	worldTransform_[PartId::Hip].translation_ = {0, 0.0f, 0};
+	worldTransform_[PartId::Hip].translation_ = {0.0f, -1.0f, 0};
 	// 左足
 	worldTransform_[PartId::LegL].Initialize();
 	worldTransform_[PartId::LegL].parent_ = &worldTransform_[PartId::Hip];
-	worldTransform_[PartId::LegL].translation_ = {0, 30.0f, 0};
+	worldTransform_[PartId::LegL].translation_ = {-4.0f, -4.0f, 0};
 	// 右足
 	worldTransform_[PartId::LegR].Initialize();
 	worldTransform_[PartId::LegR].parent_ = &worldTransform_[PartId::Hip];
-	worldTransform_[PartId::LegR].translation_ = {100.0f, 30.0f, 0};
+	worldTransform_[PartId::LegR].translation_ = {4.0f, -4.0f, 0};
 
 	// カメラ視点座標を設定
 	viewProjection_.eye = {0, 0, -50};
