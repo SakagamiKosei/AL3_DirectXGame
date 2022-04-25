@@ -50,8 +50,12 @@ void GameScene::Initialize() {
 			posDist(engine)
 		};
 
-		// ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
+		// 親(0番)
+		worldTransform_[0].Initialize();
+		// 子(1番)
+		worldTransform_[1].translation_ = {0,4.5f, 0};
+		worldTransform_[1].parent_ = &worldTransform_[0];
+		worldTransform_[1].Initialize();
 	}
 
 	// カメラ視点座標を設定
@@ -139,6 +143,38 @@ void GameScene::Update() {
 		debugText_->SetPos(50, 130);
 		debugText_->Printf("nearZ:%f", viewProjection_.nearZ);
 	}
+
+	// キャラクター移動処理
+	{
+		// キャラクターの移動ベクトル
+		XMFLOAT3 move = {0, 0, 0};
+
+		// キャラクターの移動速さ
+		const float kCharacterSpeed = 0.2f;
+
+		// 押した方向で移動ベクトルを変更
+		if (input_->PushKey(DIK_LEFT)) {
+			move = {-kCharacterSpeed, 0, 0};
+		} else if (input_->PushKey(DIK_RIGHT)) {
+			move = {kCharacterSpeed, 0, 0};
+		}
+
+		// 注視点移動(ベクトルの加算)
+		worldTransform_[PartId::Root].translation_.x += move.x;
+		worldTransform_[PartId::Root].translation_.y += move.y;
+		worldTransform_[PartId::Root].translation_.z += move.z;
+
+		// デバック用表示
+		debugText_->SetPos(50, 150);
+		debugText_->Printf(
+		  "Root:(%f,&f,%f)", worldTransform_[PartId::Root].translation_.x,
+		  worldTransform_[PartId::Root].translation_.y,
+		  worldTransform_[PartId::Root].translation_.z);
+	}
+
+	worldTransform_[0].UpdateMatrix();
+	worldTransform_[1].UpdateMatrix();
+
 }
 
 void GameScene::Draw() {
@@ -168,12 +204,13 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	// 3Dモデル描画
-	for (size_t i = 0; i < _countof(worldTransform_);i++)
+	/*for (size_t i = 0; i < _countof(worldTransform_);i++)
 	{
 		model_->Draw(worldTransform_[i], viewProjection_, 
 			textureHandle_);
-	}
-	
+	}*/
+	model_->Draw(worldTransform_[0], viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_[1], viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
