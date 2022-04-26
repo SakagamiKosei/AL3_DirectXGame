@@ -159,7 +159,7 @@ void GameScene::Update() {
 			worldTransform_[PartId::Chest].rotation_.y -= kChestRotSpeed;
 		} else if (input_->PushKey(DIK_I)) {
 			worldTransform_[PartId::Chest].rotation_.y += kChestRotSpeed;
-		}
+		} 
 	}
 
 	// 下半身回転処理
@@ -172,7 +172,7 @@ void GameScene::Update() {
 			worldTransform_[PartId::Hip].rotation_.y -= kHipRotSpeed;
 		} else if (input_->PushKey(DIK_K)) {
 			worldTransform_[PartId::Hip].rotation_.y += kHipRotSpeed;
-		}
+		} 
 	}
 }
 
