@@ -14,38 +14,51 @@ GameScene::~GameScene() {
 void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
-	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	// スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
-	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("mario.jpg");
-	// サウンドデータの読み込み
-	soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
-	// 音声生成
-	audio_->PlayWave(soundDataHandle_);
-	// 音声再生
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	//// X,Y,Z 方向のスケーリングを設定
 	// worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
 	//// X,Y,Z 軸周りの回転角を設定
 	// worldTransform_.rotation_ = {0.0f,XM_PI/4.0f,0.0f};
-	//  X,Y,Z 軸回りの回転角を設定
-	worldTransform_.rotation_ = {0.0f, XMConvertToRadians(45.0f), 0.0f};
-	//// X,Y,Z 軸回りの平行移動を設定
-	// worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
-	//  X,Y,Z 方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
-	// X,Y,Z　軸回りの回転角を設定
-	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
-	// X,Y,Z 軸回りの平行移動を設定
-	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
-	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+	
+	for (int i = 0; i < 20; i++) 
+	{
+		////  X,Y,Z 軸回りの回転角を設定
+		//worldTransform_[i].rotation_ = {0.0f, XMConvertToRadians(45.0f), 0.0f};
+		//// X,Y,Z 軸回りの平行移動を設定
+		// worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
+		//  X,Y,Z 方向のスケーリングを設定
+		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
+		//// X,Y,Z　軸回りの回転角を設定
+		//worldTransform_[i].rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
+		//// X,Y,Z 軸回りの平行移動を設定
+		//worldTransform_[i].translation_ = {10.0f, 10.0f, 10.0f};
+		// ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+		// X,Y,Z 軸回りの平行移動を設定
+		
+		// 下
+		if (9 < i) {
+			// X,Y,Z　軸回りの平行移動を設定
+			worldTransform_[i].translation_ = {-40, -20, 10.0f};
+			// X座標をすらす
+			worldTransform_[i].translation_.x += (i - 10) * 10;
+		} 
+		// 上
+		else{
+			// X,Y,Z 軸回りの平行移動
+			worldTransform_[i].translation_ = {-50, 20, 10.0f};
+			// X座標をすらす
+			worldTransform_[i].translation_.x += i * 10;
+		}
+	}
+	
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 }
@@ -58,38 +71,10 @@ void GameScene::Update() {
 	position.y += 1.0f;
 	// 移動した座標をスプライトに反映
 	sprite_->SetPosition(position);
-	// スペースキーを押した瞬間
-	if (input_->TriggerKey(DIK_SPACE)) {
-		// 音声停止
-		audio_->StopWave(voiceHandle_);
+
+	for (int i = 0; i < 20; i++) {
+		worldTransform_[i].UpdateMatrix();
 	}
-	//// デバックテキストの表示
-	// debugText_->Print("Kaizokuou ni oreha naru.", 50, 50, 1.0f);
-	//  書式指定付き表示
-	debugText_->SetPos(50, 70);
-	// debugText_->Printf("year:%d", 2001);
-	//  変数の値をインクリメント
-	value_++;
-	// 値を含んだ文字列
-	std::string translationDebug =
-	  std::string("translation:(") + std::to_string(worldTransform_.translation_.x) +
-	  std::string(",") + std::to_string(worldTransform_.translation_.y) + std::string(",") +
-	  std::to_string(worldTransform_.translation_.z) + std::string(")");
-
-	std::string rotationDebug = std::string("rotation:(") +
-	                            std::to_string(worldTransform_.rotation_.x) + std::string(",") +
-	                            std::to_string(worldTransform_.rotation_.y) + std::string(",") +
-	                            std::to_string(worldTransform_.rotation_.z) + std::string(")");
-
-	std::string scaleDebug = std::string("scale:(") + std::to_string(worldTransform_.scale_.x) +
-	                         std::string(",") + std::to_string(worldTransform_.scale_.y) +
-	                         std::string(",") + std::to_string(worldTransform_.scale_.z) +
-	                         std::string(")");
-
-	// デバックテキストの表示
-	debugText_->Print(translationDebug, 50, 50, 1.0f);
-	debugText_->Print(rotationDebug, 50, 70, 1.0f);
-	debugText_->Print(scaleDebug, 50, 90, 1.0f);
 }
 
 void GameScene::Draw() {
@@ -104,8 +89,11 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	// 3Dモデル描画
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
+		// 3Dモデル描画
+		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	}
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
