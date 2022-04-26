@@ -23,40 +23,6 @@ void GameScene::Initialize() {
 
 	// 3Dモデルの生成
 	model_ = Model::Create();
-	//// 乱数シード生成器
-	//std::random_device seed_gen;
-	//// メルセンヌ・ツイスター
-	//std::mt19937_64 engine(seed_gen());
-	//// 乱数範囲(回転角用)
-	//std::uniform_real_distribution<float> rotDist(0.0f, XM_2PI);
-	//// 乱数範囲(座標用)
-	//std::uniform_real_distribution<float> posDist(-10.0f, 10.0f);
-
-	//for (size_t i = 0; i < _countof(worldTransform_);i++) {
-	//	// X,Y,Z 方向のスケーリングを設定
-	//	worldTransform_[i].scale_ = {1.0f, 1.0f, 1.0f};
-	//	// X,Y,Z　軸回りの回転角を設定
-	//	worldTransform_[i].rotation_ = 
-	//	{
-	//	  rotDist(engine),
-	//	  rotDist(engine),
-	//	  rotDist(engine)
-	//	};
-	//	// X,Y,Z 軸周りの平行移動を設定
-	//	worldTransform_[i].translation_ = 
-	//	{
-	//		posDist(engine), 
-	//		posDist(engine),
-	//		posDist(engine)
-	//	};
-	//	
-	//}
-	//// 親(0番)
-	//worldTransform_[0].Initialize();
-	//// 子(1番)
-	//worldTransform_[1].translation_ = {0,4.5f, 0};
-	//worldTransform_[1].parent_ = &worldTransform_[0];
-	//worldTransform_[1].Initialize();
 	worldTransform_[PartId::Root].scale_ = {0.6f, 1.0f, 1.0f};
 	// キャラクターの大元
 	worldTransform_[PartId::Root].Initialize();
