@@ -54,7 +54,7 @@ class GameScene {
 	// 3Dモデル
 	Model* model_ = nullptr;
 	// ワールドトランスフォーム
-	WorldTransform worldTransform_[20];
+	WorldTransform worldTransform_[30];
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 

@@ -19,43 +19,28 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	// スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
-
 	// 3Dモデルの生成
 	model_ = Model::Create();
-	//// X,Y,Z 方向のスケーリングを設定
-	// worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
-	//// X,Y,Z 軸周りの回転角を設定
-	// worldTransform_.rotation_ = {0.0f,XM_PI/4.0f,0.0f};
 	
-	for (int i = 0; i < 20; i++) 
+	for (size_t i = 0; i < _countof(worldTransform_);i++) 
 	{
-		////  X,Y,Z 軸回りの回転角を設定
-		//worldTransform_[i].rotation_ = {0.0f, XMConvertToRadians(45.0f), 0.0f};
-		//// X,Y,Z 軸回りの平行移動を設定
-		// worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
-		//  X,Y,Z 方向のスケーリングを設定
-		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
-		//// X,Y,Z　軸回りの回転角を設定
-		//worldTransform_[i].rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
-		//// X,Y,Z 軸回りの平行移動を設定
-		//worldTransform_[i].translation_ = {10.0f, 10.0f, 10.0f};
+		worldTransform_[i].scale_ = {6.0f, 6.0f, 7.0f};
 		// ワールドトランスフォームの初期化
 		worldTransform_[i].Initialize();
-		// X,Y,Z 軸回りの平行移動を設定
 		
 		// 下
-		if (9 < i) {
+		if (14 < i) {
 			// X,Y,Z　軸回りの平行移動を設定
-			worldTransform_[i].translation_ = {-40, -20, 10.0f};
-			// X座標をすらす
-			worldTransform_[i].translation_.x += (i - 10) * 10;
+			worldTransform_[i].translation_ = {-48.2f, -23.6f, 10.0f};
+			// X座標をずらす
+			worldTransform_[i].translation_.x += (i - 15) * 12;
 		} 
 		// 上
 		else{
 			// X,Y,Z 軸回りの平行移動
-			worldTransform_[i].translation_ = {-50, 20, 10.0f};
-			// X座標をすらす
-			worldTransform_[i].translation_.x += i * 10;
+			worldTransform_[i].translation_ = {-47, 23.6f, 10.0f};
+			// X座標をずらす
+			worldTransform_[i].translation_.x += i * 12;
 		}
 	}
 	
@@ -72,7 +57,7 @@ void GameScene::Update() {
 	// 移動した座標をスプライトに反映
 	sprite_->SetPosition(position);
 
-	for (int i = 0; i < 20; i++) {
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 		worldTransform_[i].UpdateMatrix();
 	}
 }
@@ -105,7 +90,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	/*sprite_->Draw();*/
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
