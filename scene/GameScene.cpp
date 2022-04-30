@@ -22,26 +22,25 @@ void GameScene::Initialize() {
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	
+	// ワールドトランスフォームの縦列の数だけ繰り返す
 	for (size_t i = 0; i < _countof(worldTransform_);i++) 
 	{
-		worldTransform_[i].scale_ = {6.0f, 6.0f, 7.0f};
-		// ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
-		
-		// 下
-		if (14 < i) {
+		// ワールドトランスフォームの横列の数だけ繰り返す
+		for (size_t j = 0; j < _countof(worldTransform_);j++) 
+		{
+			// ワールドトランスフォームの大きさを設定
+			worldTransform_[i][j].scale_ = {1.0f, 1.0f, 1.0f};
+			// ワールドトランスフォームの初期化
+			worldTransform_[i][j].Initialize();
+
 			// X,Y,Z　軸回りの平行移動を設定
-			worldTransform_[i].translation_ = {-48.2f, -23.6f, 10.0f};
-			// X座標をずらす
-			worldTransform_[i].translation_.x += (i - 15) * 12;
-		} 
-		// 上
-		else{
-			// X,Y,Z 軸回りの平行移動
-			worldTransform_[i].translation_ = {-47, 23.6f, 10.0f};
-			// X座標をずらす
-			worldTransform_[i].translation_.x += i * 12;
+			worldTransform_[i][j].translation_ = {-15.0f,16.0f,0.0f};
+			// ワールドトランスフォームのY座標をずらす
+			worldTransform_[i][j].translation_.y -= i * 4.0f;
+			// ワールドトランスフォームのX座標をずらす
+			worldTransform_[i][j].translation_.x += j * 4.0f;
 		}
+	
 	}
 	
 	// ビュープロジェクションの初期化
@@ -49,16 +48,14 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-	// スプライトの今の座標を取得
-	XMFLOAT2 position = sprite_->GetPosition();
-	// 座標を{2,0}移動
-	position.x += 2.0f;
-	position.y += 1.0f;
-	// 移動した座標をスプライトに反映
-	sprite_->SetPosition(position);
-
-	for (size_t i = 0; i < _countof(worldTransform_); i++) {
-		worldTransform_[i].UpdateMatrix();
+	// ワールドトランスフォームの縦列の数だけ繰り返す
+	for (size_t i = 0; i < _countof(worldTransform_); i++) 
+	{
+		// ワールドトランスフォームの横列の数だけ繰り返す
+		for (size_t j = 0; j < _countof(worldTransform_); j++)
+		{
+			worldTransform_[i][j].UpdateMatrix();
+		}
 	}
 }
 
@@ -74,9 +71,45 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	for (size_t i = 0; i < _countof(worldTransform_); i++) {
-		// 3Dモデル描画
-		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	// ワールドトランスフォームの縦列の数だけ繰り返す
+	for (size_t i = 0; i < _countof(worldTransform_); i++) 
+	{
+		// ワールドトランスフォームの横列の数だけ繰り返す
+		for (size_t j = 0; j < _countof(worldTransform_); j++) 
+		{
+		
+			// -------------------------------------------
+			// 描画しない条件
+			// -------------------------------------------
+			// もし縦列が奇数なら
+			if ((i & 1) == 1)
+			{
+				// もし横列が奇数なら
+				if ((j & 1) == 1) 
+				{
+				
+				}
+				// ------------------------------------------
+				// 描画する条件
+				// ------------------------------------------
+				// もし縦列が奇数で横列が偶数なら
+				else
+				{
+					// 3Dモデル描画
+					model_->Draw(worldTransform_[i][j], viewProjection_, textureHandle_);
+				}
+			} 
+			// ------------------------------------------
+			// 描画する条件
+			// ------------------------------------------
+			// もし縦列が偶数なら
+			else 
+			{
+				// 3Dモデル描画
+				model_->Draw(worldTransform_[i][j], viewProjection_, textureHandle_);
+			}
+				
+		}	
 	}
 
 	// 3Dオブジェクト描画後処理
