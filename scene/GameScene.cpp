@@ -34,7 +34,7 @@ void GameScene::Initialize() {
 				worldTransform_[i][j][k].Initialize();
 
 				// X,Y,Z　軸回りの平行移動を設定
-				worldTransform_[i][j][k].translation_ = {-10.0f, 10.0f, 0.0f};
+				worldTransform_[i][j][k].translation_ = {-10.0f, 12.5f, 0.0f};
 				// ワールドトランスフォームのY座標をずらす
 				worldTransform_[i][j][k].translation_.y -= i * 3.0f;
 				// ワールドトランスフォームのX座標をずらす
